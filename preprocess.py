@@ -8,7 +8,7 @@ sys.setdefaultencoding('utf-8')
 
 stop_words = set(stopwords.words("english"))
 list = []
-file = open('output.txt','w')
+file = open('alex_file.txt','w')
 with open('train_file_cmps142_hw3', 'r') as fileinput:
    for line in fileinput:
        lines = line.lower()
