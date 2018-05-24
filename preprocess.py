@@ -1,4 +1,5 @@
 import nltk 
+nltk.download('punkt')
 from nltk import word_tokenize
 import sys
 reload(sys)
@@ -6,7 +7,7 @@ sys.setdefaultencoding('utf-8')
 
 
 list = []
-file = open('output.txt','w')
+file = open('alex_file.txt','w')
 with open('train_file_cmps142_hw3', 'r') as fileinput:
    for line in fileinput:
        lines = line.lower()
