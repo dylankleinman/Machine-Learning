@@ -1,10 +1,12 @@
 import nltk 
+nltk.download('punkt')
 from nltk import word_tokenize
+from nltk.corpus import stopwords
 import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
-
+stop_words = set(stopwords.words("english"))
 list = []
 file = open('output.txt','w')
 with open('train_file_cmps142_hw3', 'r') as fileinput:
@@ -25,3 +27,14 @@ def unique(list):
 unique(list)
 print('the regular length is')
 print len(list)
+
+example_sent = ['hello','hello','there','in', 'is']
+filtered_word_list = example_sent
+
+for word in example_sent: # iterate over word_list
+  if word in stopwords.words('english'): 
+    filtered_word_list.remove(word)
+
+print('the words in example_sent with stopwords taken out:')
+print filtered_word_list
+
