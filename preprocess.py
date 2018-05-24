@@ -1,19 +1,27 @@
 import nltk 
-nltk.download('punkt')
 from nltk import word_tokenize
 import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
+
+list = []
 file = open('output.txt','w')
 with open('train_file_cmps142_hw3', 'r') as fileinput:
    for line in fileinput:
        lines = line.lower()
-       print(word_tokenize(line))
-       file.write(lines)
+       token = word_tokenize(line)
+       list.append(token)
+file.close()
 
-file.close() 
+def unique(list):
+	unique_list = []
+	for x in list:
+		if x not in unique_list:
+			unique_list.append(x)
+	print('the unique list length: ')
+	print len(unique_list)
 
-data = "All work and no play makes jack a dull boy, all work and no play"
-print(word_tokenize(data))
-
+unique(list)
+print('the regular length is')
+print len(list)
