@@ -8,14 +8,15 @@ sys.setdefaultencoding('utf-8')
 
 stop_words = set(stopwords.words("english"))
 list = []
+rem_stopwords_list = []
+stopwords_set =  set(stopwords.words('english'))
 file = open('output.txt','w')
 with open('train_file_cmps142_hw3', 'r') as fileinput:
    for line in fileinput:
        lines = line.lower()
        file.write(lines)
-       token = word_tokenize(line)
+       token = word_tokenize(lines)
        list.append(token)
-file.close()
 
 unique_list = []
 def unique(list):
@@ -23,24 +24,31 @@ def unique(list):
 		if x not in unique_list:
 			unique_list.append(x)
 	print('the unique list length: ')
-	print unique_list
-
-
+	print len(unique_list)
 
 
 unique(list)
 print('the regular length is')
-print list
+print len(list)
 
-# example_sent = ['hello','hello','there','in', 'is']
-# print list[0]
-# unique(list[0])
+rem_stopwords_list = [[word for word in sub if word not in stopwords_set] for sub in list]
+print rem_stopwords_list
+
+
+# example_sent = ['hello','hello','there','in', 'is', 'dylan'],['hello','hello','there','in', 'is','alex'],['hello','hello','there','in', 'is']
 # unique(example_sent)
-# filtered_word_list = example_sent
+# print ('this is the unfiltered example_sent: ')
+# print example_sent
 
-# for word in example_sent: # iterate over word_list
-#   if word in stopwords.words('english'): 
-#     filtered_word_list.remove(word)
+# example_sent = [[word for word in sub if word not in stopwords_set] for sub in example_sent]
+# print example_sent
 
-# print('the words in example_sent with stopwords taken out:')
-# print filtered_word_list
+
+
+file.close()
+
+
+
+
+
+
