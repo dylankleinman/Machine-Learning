@@ -1,12 +1,10 @@
 import nltk 
-nltk.download('punkt')
 from nltk import word_tokenize
-from nltk.corpus import stopwords
 import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
-stop_words = set(stopwords.words("english"))
+
 list = []
 file = open('output.txt','w')
 with open('train_file_cmps142_hw3', 'r') as fileinput:
@@ -29,6 +27,7 @@ def unique(list):
 unique(list[0])
 print('the regular length is')
 print len(list)
+<<<<<<< HEAD
 
 # example_sent = ['hello','hello','there','in', 'is']
 # filtered_word_list = example_sent
@@ -40,3 +39,5 @@ print len(list)
 # print('the words in example_sent with stopwords taken out:')
 # print filtered_word_list
 
+=======
+>>>>>>> parent of 074cf9f... started step 3, unfinished
