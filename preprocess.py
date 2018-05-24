@@ -1,8 +1,10 @@
 import nltk 
-nltk.download('punkt')
+# nltk.download('punkt')
 from nltk import word_tokenize
 from nltk.corpus import stopwords
 import sys
+import string
+
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
@@ -14,7 +16,6 @@ stopwords_set =  set(stopwords.words('english'))
 file = open('output.txt','w')
 distinct_file = open('output_distinct.txt','w')
 numwords = 0
-numlines = 0
 
 with open('train_file_cmps142_hw3', 'r') as fileinput:
 	for line in fileinput:
@@ -40,23 +41,28 @@ print numwords
 print('the number of distinct words in the textfile is: ')
 print len(distinct_list)
 
-
-##doesnt work on list elements yet, only lists within the list
-unique_list = []
-def unique(list):
-	for x in list:
-		if x not in unique_list:
-			unique_list.append(x)
-	print('the unique list length: ')
-	print len(unique_list)
-#############################################
-# unique(list)
-# print('the regular length is')
-# print len(list)
-
 ####removes stop words from the list and puts in new list
 rem_stopwords_list = [[word for word in sub if word not in stopwords_set] for sub in list]
-#print rem_stopwords_list
+print('the number of words with stopwords removed is:')
+print len(rem_stopwords_list)
+
+# test_list = [['hello','he!!!!',''],['hello','he!!!!','']]
+
+#remove all punctuation from rem_stopwords_list
+rem_punctuation_list = [[s.rstrip(string.punctuation) for s in nested] for nested in rem_stopwords_list]
+
+# for list in test_list:
+# 	print list
+# 	filter(None, list)
+# print test_list
+
+print('the list without punctuation and stopwords is(havent taken out empty elements yet): ')
+print rem_punctuation_list
+
+
+
+
+
 
 
 
