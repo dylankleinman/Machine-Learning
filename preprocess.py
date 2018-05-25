@@ -52,7 +52,7 @@ for word in flattened_list:
 		distinct_list_2.append(word)
 		num_words += 1
 
-print ('the number of distinct words in list:')
+print ('the number of distinct words in list, answer to problem 2(a)')
 print num_words
 
 ####removes stop words from the list and puts in new list
@@ -74,8 +74,8 @@ print len(flatten(rem_punctuation_list))
 
 stemmed_list = [[stemmer.stem(word) for word in nested] for nested in rem_punctuation_list] 
 
-print ('the list without stems is: ')
-print len(flatten(stemmed_list))
+print ('The answer to Step 5 (a)')
+print stemmed_list[10]
 
 
 
