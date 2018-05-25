@@ -84,13 +84,6 @@ print stemmed_list[10]
 print('number in list after stemmed')
 print len(flatten(stemmed_list))
 
-test = [["P1", "P1", "P1", "P2", "P2", "P1", "P1", "P3"],
-        ["P1", "P1", "P1"],
-        ["P1", "P1", "P1", "P2"],
-        ["P4"],
-        ["P1", "P4", "P2"],
-        ["P1", "P1", "P1"]]
-
 counted_list = []
 c = Counter(chain.from_iterable(stemmed_list))
 ##creates list counted_list filled with all stemmed list elements that contain more than 5 iterations
