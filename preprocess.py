@@ -2,12 +2,14 @@ import nltk
 # nltk.download('punkt')
 from nltk import word_tokenize
 from nltk.corpus import stopwords
+from nltk.stem import PorterStemmer
 import sys
 import string
 
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
+stemmer = PorterStemmer()
 stop_words = set(stopwords.words("english"))
 list = []
 distinct_list = []
@@ -54,6 +56,8 @@ rem_punctuation_list = [[s.rstrip(string.punctuation) for s in nested] for neste
 #to remove empty elements
 for test_count in rem_punctuation_list:
 	test_count[:] = [item for item in test_count if item != '']
+
+stemmed_list = [[stemmer.stem(word) for word in nested] for nested in rem_punctuation_list] 
 	
 # for list in test_list:
 # 	print list
@@ -61,4 +65,4 @@ for test_count in rem_punctuation_list:
 # print test_list
 
 print('the list without punctuation and stopwords is(havent taken out empty elements yet): ')
-print rem_punctuation_list
+print stemmed_list
