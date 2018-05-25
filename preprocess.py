@@ -12,13 +12,12 @@ sys.setdefaultencoding('utf-8')
 
 stop_words = set(stopwords.words("english"))
 list = []
-distinct_list = []
+distinct_textfile = []
 distinct_list_2 = []
 rem_stopwords_list = []
 stopwords_set =  set(stopwords.words('english'))
 file = open('output.txt','w')
-distinct_file = open('output_distinct.txt','w')
-numwords = 0
+numwords_in_textfile = 0
 num_words= 0 
 
 with open('train_file_cmps142_hw3', 'r') as fileinput:
@@ -34,16 +33,16 @@ with open('output.txt', 'r') as file:
 	for line in file:
 		wordslist = line.split()
 		for word in wordslist:
-			if word not in distinct_list:
-				distinct_list.append(word)
-		numwords += len(wordslist)
+			if word not in distinct_textfile:
+				distinct_textfile.append(word)
+		numwords_in_textfile += len(wordslist)
 
 print('the number of words in the textfile is:')
-print numwords
+print numwords_in_textfile
 print('the number of distinct words in the textfile is: ')
-print len(distinct_list)
+print len(distinct_textfile)
 
-
+##prints out the number of elements in the list, and distinct elements in the list
 print('the length of the list is')
 print len(flatten(list))
 
@@ -73,10 +72,13 @@ for test_count in rem_punctuation_list:
 print('the list without punctuation and stopwords is: ')
 print len(flatten(rem_punctuation_list))
 
-words = [["game","gaming","gamed","games"],["game","gaming","gamed","games"]]
-for list in words:
-	for word in words:
-		print word
+stemmed_list = [[stemmer.stem(word) for word in nested] for nested in rem_punctuation_list] 
+
+print ('the list without stems is: ')
+print len(flatten(stemmed_list))
+
+
+
 
 
 
