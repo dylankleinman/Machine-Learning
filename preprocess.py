@@ -98,14 +98,3 @@ rem_counted_list = [[word for word in sub if word not in counted_list] for sub i
 
 print('after removing words that appear less than 5 times')
 print len(flatten(rem_counted_list))
-
-
-
-
-
-
-
-
-
-
-
