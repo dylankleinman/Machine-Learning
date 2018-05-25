@@ -3,9 +3,10 @@ import nltk
 from nltk import word_tokenize
 from nltk.corpus import stopwords
 from compiler.ast import flatten
+from nltk.stem.porter import PorterStemmer
 import sys
 import string
-
+stemmer = PorterStemmer()
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
@@ -69,12 +70,13 @@ print len(flatten(rem_punctuation_list))
 for test_count in rem_punctuation_list:
 	test_count[:] = [item for item in test_count if item != '']
 	
-
 print('the list without punctuation and stopwords is: ')
 print len(flatten(rem_punctuation_list))
 
-
-
+words = [["game","gaming","gamed","games"],["game","gaming","gamed","games"]]
+for list in words:
+	for word in words:
+		print word
 
 
 
