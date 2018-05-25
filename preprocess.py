@@ -4,8 +4,12 @@ from nltk import word_tokenize
 from nltk.corpus import stopwords
 from compiler.ast import flatten
 from nltk.stem.porter import PorterStemmer
+from collections import Counter
+from itertools import chain
 import sys
 import string
+
+
 stemmer = PorterStemmer()
 reload(sys)
 sys.setdefaultencoding('utf-8')
@@ -76,6 +80,33 @@ stemmed_list = [[stemmer.stem(word) for word in nested] for nested in rem_punctu
 
 print ('The answer to Step 5 (a)')
 print stemmed_list[10]
+
+print('number in list after stemmed')
+print len(flatten(stemmed_list))
+
+test = [["P1", "P1", "P1", "P2", "P2", "P1", "P1", "P3"],
+        ["P1", "P1", "P1"],
+        ["P1", "P1", "P1", "P2"],
+        ["P4"],
+        ["P1", "P4", "P2"],
+        ["P1", "P1", "P1"]]
+
+counted_list = []
+c = Counter(chain.from_iterable(stemmed_list))
+##creates list counted_list filled with all stemmed list elements that contain more than 5 iterations
+for k, v in c.items():
+    # print(k, v)
+    if v<5:
+    	counted_list.append(k)
+
+print('the amount of words that appear less than 5 times')
+print len(flatten(counted_list))
+rem_counted_list = [[word for word in sub if word not in counted_list] for sub in stemmed_list]
+
+print('after removing words that appear less than 5 times')
+print len(flatten(rem_counted_list))
+
+
 
 
 
