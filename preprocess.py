@@ -1,3 +1,8 @@
+#Dylan Kleinman, Alex Angelidis
+#5/26/18
+#cs142 Hw3
+
+
 import nltk 
 # nltk.download('punkt')
 from nltk import word_tokenize
