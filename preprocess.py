@@ -23,9 +23,8 @@ with open('train_file_cmps142_hw3', 'r') as fileinput:
 		file.write(lines)
 		token = word_tokenize(lines)
 		list.append(token)
-
-
 file.close()
+print len(list)
 
 ##count number of words in file
 with open('output.txt', 'r') as file:
@@ -35,6 +34,7 @@ with open('output.txt', 'r') as file:
 			if word not in distinct_list:
 				distinct_list.append(word)
 		numwords += len(wordslist)
+
 
 print('the number of words in the textfile is:')
 print numwords
@@ -46,23 +46,10 @@ rem_stopwords_list = [[word for word in sub if word not in stopwords_set] for su
 print('the number of words with stopwords removed is:')
 print len(rem_stopwords_list)
 
-# test_list = [['hello','he!!!!',''],['hello','he!!!!','']]
 
-#remove all punctuation from rem_stopwords_list
 rem_punctuation_list = [[s.rstrip(string.punctuation) for s in nested] for nested in rem_stopwords_list]
-
-# for list in test_list:
-# 	print list
-# 	filter(None, list)
-# print test_list
-
 print('the list without punctuation and stopwords is(havent taken out empty elements yet): ')
 print rem_punctuation_list
-
-
-
-
-
 
 
 
