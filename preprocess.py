@@ -129,19 +129,18 @@ print ('The answer to Step 6 (a)')
 print filtered_words
 print ("\n")
 
-def write(file, tokens, label):
-	write_list = tokens
+def write(file, filtered_list, unfiltered_list, label):
+	write_list = filtered_list
 	tokens = []
 	with io.open(file, 'w', encoding='utf8') as outfile:
 		l = ','.join(write_list) + '\n'
 		outfile.write(l)
+		for w in range(0,len(unfiltered_list)):
+			l = ','.join(write_list) + '\n'
+			outfile.write(l)
 
-	for i in range(0, len(tokens)):
-		word = []
-		f = FreqDist(tokens[i])
 
-
-write(out_file, filtered_list, labels)
+write(out_file, filtered_list, list, labels)
 
 
 
