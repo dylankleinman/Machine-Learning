@@ -13,6 +13,7 @@ from collections import Counter
 from itertools import chain
 import sys
 import string
+import io
 
 
 stemmer = PorterStemmer()
@@ -32,6 +33,7 @@ filtered_list = []
 
 stopwords_set =  set(stopwords.words('english'))
 file = open('output.txt','w')
+out_file = 'out_file.txt'
 numwords_in_textfile = 0
 num_words= 0 
 
@@ -44,7 +46,7 @@ with open('train_file_cmps142_hw3', 'r') as fileinput:
 		token_list.append(token)
 file.close()
 
-label = [line[0] for line in token_list]
+labels = [line[0] for line in token_list]
 list = [line[1:] for line in token_list]
 
 ##count number of words in file
@@ -78,7 +80,6 @@ print ("\n")
 ####removes stop words from the list and puts in new list
 rem_stopwords_list = [[word for word in sub if word not in stopwords_set] for sub in list]
 #print('the number of words with stopwords removed is:')
-#<<<<<<< HEAD
 #print len(flatten(rem_stopwords_list))
 
 # remove punctuation from list
@@ -114,53 +115,45 @@ for k, v in c.items():
 #print len(flatten(counted_list))
 rem_counted_list = [[word for word in sub if word not in counted_list] for sub in stemmed_list]
 
-#print('after removing words that appear less than 5 times')
-#print len(flatten(rem_counted_list))
+print('after removing words that appear less than 5 times')
+print len(flatten(rem_counted_list))
 
 filtered_words = 0
 flattened_list2 = flatten(rem_counted_list)
 for word in flattened_list2:
 	if word not in filtered_list:
+		# print word
 		filtered_list.append(word)
 		filtered_words += 1
 print ('The answer to Step 6 (a)')
 print filtered_words
 print ("\n")
 
+def write(file, tokens, label):
+	write_list = tokens
+	tokens = []
+	with io.open(file, 'w', encoding='utf8') as outfile:
+		l = ','.join(write_list) + '\n'
+		outfile.write(l)
+
+	for i in range(0, len(tokens)):
+		word = []
+		f = FreqDist(tokens[i])
+
+
+write(out_file, filtered_list, labels)
+
+
 
 #convert to csv file
-csv_file = open('HW3_Angelidis_train.csv','w')
-for sublist in rem_counted_list:
-	for word in sublist:
-		csv_file.write(word+" ")
-	csv_file.write("\n")	
-csv_file.close()
+# csv_file = open('HW3_Angelidis_train.csv','w')
+# for sublist in rem_counted_list:
+# 	for word in sublist:
+# 		csv_file.write(word+" ")
+# 	csv_file.write("\n")	
+# csv_file.close()
 
 
 
 
 
-
-
-
-
-#=======
-#print len(rem_stopwords_list)
-
-# test_list = [['hello','he!!!!',''],['hello','he!!!!','']]
-
-#remove all punctuation from rem_stopwords_list
-#rem_punctuation_list = [[s.rstrip(string.punctuation) for s in nested] for nested in rem_stopwords_list]
-#>>>>>>> c06b9741da553271796c1d3d5c0166ac8e46c7ac
-
-#to remove empty elements
-#for test_count in rem_punctuation_list:
-#	test_count[:] = [item for item in test_count if item != '']
-	
-# for list in test_list:
-# 	print list
-# 	filter(None, list)
-# print test_list
-
-#print('the list without punctuation and stopwords is(havent taken out empty elements yet): ')
-#print rem_punctuation_list
