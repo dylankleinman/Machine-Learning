@@ -11,10 +11,11 @@ from compiler.ast import flatten
 from nltk.stem.porter import PorterStemmer
 from collections import Counter
 from itertools import chain
+from nltk.probability import FreqDist
 import sys
 import string
+import csv
 import io
-
 
 stemmer = PorterStemmer()
 reload(sys)
@@ -33,7 +34,6 @@ filtered_list = []
 
 stopwords_set =  set(stopwords.words('english'))
 file = open('output.txt','w')
-out_file = 'out_file.txt'
 numwords_in_textfile = 0
 num_words= 0 
 
@@ -46,7 +46,7 @@ with open('train_file_cmps142_hw3', 'r') as fileinput:
 		token_list.append(token)
 file.close()
 
-labels = [line[0] for line in token_list]
+label = [line[0] for line in token_list]
 list = [line[1:] for line in token_list]
 
 ##count number of words in file
@@ -80,6 +80,7 @@ print ("\n")
 ####removes stop words from the list and puts in new list
 rem_stopwords_list = [[word for word in sub if word not in stopwords_set] for sub in list]
 #print('the number of words with stopwords removed is:')
+#<<<<<<< HEAD
 #print len(flatten(rem_stopwords_list))
 
 # remove punctuation from list
@@ -115,44 +116,71 @@ for k, v in c.items():
 #print len(flatten(counted_list))
 rem_counted_list = [[word for word in sub if word not in counted_list] for sub in stemmed_list]
 
-print('after removing words that appear less than 5 times')
-print len(flatten(rem_counted_list))
+#print('after removing words that appear less than 5 times')
+#print len(flatten(rem_counted_list))
 
 filtered_words = 0
 flattened_list2 = flatten(rem_counted_list)
 for word in flattened_list2:
 	if word not in filtered_list:
-		# print word
 		filtered_list.append(word)
 		filtered_words += 1
 print ('The answer to Step 6 (a)')
 print filtered_words
 print ("\n")
 
-def write(file, filtered_list, unfiltered_list, label):
-	write_list = filtered_list
-	tokens = []
-	with io.open(file, 'w', encoding='utf8') as outfile:
-		l = ','.join(write_list) + '\n'
-		outfile.write(l)
-		for w in range(0,len(unfiltered_list)):
-			l = ','.join(write_list) + '\n'
-			outfile.write(l)
-
-
-write(out_file, filtered_list, list, labels)
-
-
 
 #convert to csv file
-# csv_file = open('HW3_Angelidis_train.csv','w')
-# for sublist in rem_counted_list:
-# 	for word in sublist:
-# 		csv_file.write(word+" ")
-# 	csv_file.write("\n")	
-# csv_file.close()
+def write(file, final_list, labels, tokens):
+    num_tracker = []
+    freq = FreqDist([word for sublist in final_list for word in sublist])
+
+    #block of code to get freq of word in instance
+    for iter in range(0, len(final_list)):
+        f_list = []
+        line_freq = FreqDist(final_list[iter])
+        for word in freq:
+            if word in line_freq:
+                f_list.append(u'{}'.format(line_freq[word]))
+            else:
+                f_list.append(u'0')
+
+        num_tracker.append(f_list)
+
+    write_list = tokens
+    tokens = []
+    counter = 0
+
+    #code to write to csv file
+    with io.open(file, 'w', encoding='utf8') as outfile:
+		header = ','.join(write_list) 
+		label_word = ','+"label" + '\n'
+		outfile.write(header+label_word)
 
 
+		for num in num_tracker:
+			num_occurances = ','.join(num)
+			end_label = ','+labels[counter] + '\n'
+			counter +=1
+			outfile.write(num_occurances+end_label)
 
+write('HW3_Angelidis_train.csv', rem_counted_list, label, filtered_list)
 
+##############Dylan's code
+#def write(file, filtered_list, unfiltered_list, label):
+#	write_list = filtered_list
+#	tokens = []
+#	with io.open(file, 'w', encoding='utf8') as outfile:
+#		l = ','.join(write_list) + '\n'
+#		outfile.write(l)
+#		for w in range(0,len(unfiltered_list)):
+#			l = ','.join(write_list) + '\n'
+#			outfile.write(l)
 
+#convert to csv file
+#csv_file = open('testing.csv','w')
+f#or sublist in rem_counted_list:
+#	for word in sublist:
+#		csv_file.write(word+" ")
+#	csv_file.write("\n")	
+#csv_file.close()
