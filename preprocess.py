@@ -129,40 +129,35 @@ print ('The answer to Step 6 (a)')
 print filtered_words
 print ("\n")
 
-
 #convert to csv file
 def write(file, final_list, labels, tokens):
     num_tracker = []
     freq = FreqDist([word for sublist in final_list for word in sublist])
-
     #block of code to get freq of word in instance
     for iter in range(0, len(final_list)):
-        f_list = []
+        row_list = []
         line_freq = FreqDist(final_list[iter])
         for word in freq:
             if word in line_freq:
-                f_list.append(u'{}'.format(line_freq[word]))
+                row_list.append(u'{}'.format(line_freq[word]))
             else:
-                f_list.append(u'0')
-
-        num_tracker.append(f_list)
+                row_list.append(u'0')
+        num_tracker.append(row_list)
 
     write_list = tokens
     tokens = []
     counter = 0
-
     #code to write to csv file
     with io.open(file, 'w', encoding='utf8') as outfile:
-		header = ','.join(write_list) 
-		label_word = ','+"label" + '\n'
-		outfile.write(header+label_word)
-
-
-		for num in num_tracker:
-			num_occurances = ','.join(num)
-			end_label = ','+labels[counter] + '\n'
-			counter +=1
-			outfile.write(num_occurances+end_label)
+    	headers = freq.keys()
+    	header = ','.join(headers) 
+    	label_word = ','+"label" + '\n'
+    	outfile.write(header+label_word)
+    	for num in num_tracker:
+    		num_occurances = ','.join(num)
+    		end_label = ','+labels[counter] + '\n'
+    		counter +=1
+    		outfile.write(num_occurances+end_label)
 
 write('HW3_Angelidis_train.csv', rem_counted_list, label, filtered_list)
 
@@ -176,10 +171,11 @@ write('HW3_Angelidis_train.csv', rem_counted_list, label, filtered_list)
 #		for w in range(0,len(unfiltered_list)):
 #			l = ','.join(write_list) + '\n'
 #			outfile.write(l)
+############################################
 
 #convert to csv file
 #csv_file = open('testing.csv','w')
-f#or sublist in rem_counted_list:
+#for sublist in rem_counted_list:
 #	for word in sublist:
 #		csv_file.write(word+" ")
 #	csv_file.write("\n")	
