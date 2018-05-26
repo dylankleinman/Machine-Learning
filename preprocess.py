@@ -114,6 +114,14 @@ rem_counted_list = [[word for word in sub if word not in counted_list] for sub i
 print('after removing words that appear less than 5 times')
 print len(flatten(rem_counted_list))
 
+#convert to csv file
+csv_file = open('HW3_Angelidis_train.csv','w')
+for sublist in rem_counted_list:
+	for word in sublist:
+		csv_file.write(word+" ")
+	csv_file.write("\n")	
+csv_file.close()
+
 
 
 
