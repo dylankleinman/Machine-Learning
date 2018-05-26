@@ -27,6 +27,7 @@ token_list = []
 distinct_textfile = []
 distinct_list_2 = []
 rem_stopwords_list = []
+filtered_list = []
 ##########################
 
 stopwords_set =  set(stopwords.words('english'))
@@ -55,14 +56,14 @@ with open('output.txt', 'r') as file:
 				distinct_textfile.append(word)
 		numwords_in_textfile += len(wordslist)
 
-print('the number of words in the textfile is:')
-print numwords_in_textfile
-print('the number of distinct words in the textfile is: ')
-print len(distinct_textfile)
+#print('the number of words in the textfile is:')
+#print numwords_in_textfile
+#print('the number of distinct words in the textfile is: ')
+#print len(distinct_textfile)
 
 ##prints out the number of elements in the list, and distinct elements in the list
-print('the length of the list is')
-print len(flatten(list))
+#print('the length of the list is')
+#print len(flatten(list))
 
 flattened_list = flatten(list)
 for word in flattened_list:
@@ -72,32 +73,34 @@ for word in flattened_list:
 
 print ('the number of distinct words in list, answer to problem 2(a)')
 print num_words
+print ("\n")
 
 ####removes stop words from the list and puts in new list
 rem_stopwords_list = [[word for word in sub if word not in stopwords_set] for sub in list]
-print('the number of words with stopwords removed is:')
+#print('the number of words with stopwords removed is:')
 #<<<<<<< HEAD
-print len(flatten(rem_stopwords_list))
+#print len(flatten(rem_stopwords_list))
 
 # remove punctuation from list
 rem_punctuation_list = [[s.rstrip(string.punctuation) for s in nested] for nested in rem_stopwords_list]
-print('the list without punctuation and stopwords is(havent taken out empty elements yet): ')
-print len(flatten(rem_punctuation_list))
+#print('the list without punctuation and stopwords is(havent taken out empty elements yet): ')
+#print len(flatten(rem_punctuation_list))
 
 #to remove empty elements
 for test_count in rem_punctuation_list:
 	test_count[:] = [item for item in test_count if item != '']
 	
-print('the list without punctuation and stopwords is: ')
-print len(flatten(rem_punctuation_list))
+#print('the list without punctuation and stopwords is: ')
+#print len(flatten(rem_punctuation_list))
 
 stemmed_list = [[stemmer.stem(word) for word in nested] for nested in rem_punctuation_list] 
 
 print ('The answer to Step 5 (a)')
 print stemmed_list[10]
+print ("\n")
 
-print('number in list after stemmed')
-print len(flatten(stemmed_list))
+#print('number in list after stemmed')
+#print len(flatten(stemmed_list))
 
 counted_list = []
 c = Counter(chain.from_iterable(stemmed_list))
@@ -107,12 +110,23 @@ for k, v in c.items():
     if v<5:
     	counted_list.append(k)
 
-print('the amount of words that appear less than 5 times')
-print len(flatten(counted_list))
+#print('the amount of words that appear less than 5 times')
+#print len(flatten(counted_list))
 rem_counted_list = [[word for word in sub if word not in counted_list] for sub in stemmed_list]
 
-print('after removing words that appear less than 5 times')
-print len(flatten(rem_counted_list))
+#print('after removing words that appear less than 5 times')
+#print len(flatten(rem_counted_list))
+
+filtered_words = 0
+flattened_list2 = flatten(rem_counted_list)
+for word in flattened_list2:
+	if word not in filtered_list:
+		filtered_list.append(word)
+		filtered_words += 1
+print ('The answer to Step 6 (a)')
+print filtered_words
+print ("\n")
+
 
 #convert to csv file
 csv_file = open('HW3_Angelidis_train.csv','w')
