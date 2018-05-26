@@ -73,9 +73,9 @@ for word in flattened_list:
 		distinct_list_2.append(word)
 		num_words += 1
 
-print ('the number of distinct words in list, answer to problem 2(a)')
-print num_words
-print ("\n")
+# print ('the number of distinct words in list, answer to problem 2(a)')
+# print num_words
+# print ("\n")
 
 ####removes stop words from the list and puts in new list
 rem_stopwords_list = [[word for word in sub if word not in stopwords_set] for sub in list]
@@ -97,8 +97,8 @@ for test_count in rem_punctuation_list:
 
 stemmed_list = [[stemmer.stem(word) for word in nested] for nested in rem_punctuation_list] 
 
-print ('The answer to Step 5 (a)')
-print stemmed_list[10]
+print ('The answer to Step 1(a)')
+print stemmed_list[23]
 print ("\n")
 
 #print('number in list after stemmed')
@@ -125,9 +125,9 @@ for word in flattened_list2:
 	if word not in filtered_list:
 		filtered_list.append(word)
 		filtered_words += 1
-print ('The answer to Step 6 (a)')
-print filtered_words
-print ("\n")
+# print ('The answer to Step 6 (a)')
+# print filtered_words
+# print ("\n")
 
 #convert to csv file
 def write(file, final_list, labels, tokens):
@@ -155,7 +155,7 @@ def write(file, final_list, labels, tokens):
     	outfile.write(header+label_word)
     	for num in num_tracker:
     		num_occurances = ','.join(num)
-    		end_label = ',0,'+labels[counter] + '\n'
+    		end_label = ','+labels[counter] + '\n'
     		counter +=1
     		outfile.write(num_occurances+end_label)
 
