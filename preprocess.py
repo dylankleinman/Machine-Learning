@@ -23,10 +23,7 @@ stop_words = set(stopwords.words("english"))
 
 #####list intialize
 list = []
-<<<<<<< HEAD
 token_list = []
-=======
->>>>>>> 4e66424c77b4f25de4e0bc1e67e3e45774049c66
 distinct_textfile = []
 distinct_list_2 = []
 rem_stopwords_list = []
@@ -45,12 +42,9 @@ with open('train_file_cmps142_hw3', 'r') as fileinput:
 		#list.append(token)
 		token_list.append(token)
 file.close()
-<<<<<<< HEAD
 
 label = [line[0] for line in token_list]
 list = [line[1:] for line in token_list]
-=======
->>>>>>> 4e66424c77b4f25de4e0bc1e67e3e45774049c66
 
 ##count number of words in file
 with open('output.txt', 'r') as file:
@@ -82,10 +76,7 @@ print num_words
 ####removes stop words from the list and puts in new list
 rem_stopwords_list = [[word for word in sub if word not in stopwords_set] for sub in list]
 print('the number of words with stopwords removed is:')
-<<<<<<< HEAD
 #<<<<<<< HEAD
-=======
->>>>>>> 4e66424c77b4f25de4e0bc1e67e3e45774049c66
 print len(flatten(rem_stopwords_list))
 
 # remove punctuation from list
@@ -99,7 +90,6 @@ for test_count in rem_punctuation_list:
 	
 print('the list without punctuation and stopwords is: ')
 print len(flatten(rem_punctuation_list))
-<<<<<<< HEAD
 
 stemmed_list = [[stemmer.stem(word) for word in nested] for nested in rem_punctuation_list] 
 
@@ -160,28 +150,3 @@ csv_file.close()
 
 #print('the list without punctuation and stopwords is(havent taken out empty elements yet): ')
 #print rem_punctuation_list
-=======
-
-stemmed_list = [[stemmer.stem(word) for word in nested] for nested in rem_punctuation_list] 
-
-print ('The answer to Step 5 (a)')
-print stemmed_list[10]
-
-print('number in list after stemmed')
-print len(flatten(stemmed_list))
-
-counted_list = []
-c = Counter(chain.from_iterable(stemmed_list))
-##creates list counted_list filled with all stemmed list elements that contain more than 5 iterations
-for k, v in c.items():
-    # print(k, v)
-    if v<5:
-    	counted_list.append(k)
-
-print('the amount of words that appear less than 5 times')
-print len(flatten(counted_list))
-rem_counted_list = [[word for word in sub if word not in counted_list] for sub in stemmed_list]
-
-print('after removing words that appear less than 5 times')
-print len(flatten(rem_counted_list))
->>>>>>> 4e66424c77b4f25de4e0bc1e67e3e45774049c66
