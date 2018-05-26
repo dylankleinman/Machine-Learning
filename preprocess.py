@@ -155,7 +155,7 @@ def write(file, final_list, labels, tokens):
     	outfile.write(header+label_word)
     	for num in num_tracker:
     		num_occurances = ','.join(num)
-    		end_label = ','+labels[counter] + '\n'
+    		end_label = ',0,'+labels[counter] + '\n'
     		counter +=1
     		outfile.write(num_occurances+end_label)
 
