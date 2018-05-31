@@ -19,10 +19,22 @@ public class LogisticRegression {
 
         /** TODO: Constructor initializes the weight vector. Initialize it by setting it to the 0 vector. **/
         public LogisticRegression(int n) { // n is the number of weights to be learned
+            int iter = 0;
+            weights = new double[n];
+            for (iter = 0; iter < n; iter++) {
+                weights[iter] = 0;
+            }
         }
 
         /** TODO: Implement the function that returns the L2 norm of the weight vector **/
         private double weightsL2Norm(){
+            double normL2 = 0;
+
+            //Euclidean norm function.
+            for(int iter = 0; iter < weights.length; iter++) {
+                normL2 += Math.pow(weights[iter], 2);
+            }
+            return Math.sqrt(normL2);
         }
 
         /** TODO: Implement the sigmoid function **/ //DONE//
@@ -40,6 +52,8 @@ public class LogisticRegression {
         /** Takes a test instance as input and outputs the predicted label **/
         /** This function should call probPred1() **/
         public int predict(double[] x) {
+            double pred = probPred1(x);
+
         }
 
         /** This function takes a test set as input, call the predict() to predict a label for it, and prints the accuracy, P, R, and F1 score of the positive class and negative class and the confusion matrix **/
