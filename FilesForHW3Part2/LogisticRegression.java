@@ -54,7 +54,7 @@ public class LogisticRegression {
           double testprob = 0;
 
           for (int iter = 0; iter < weights.length; iter++)  {
-              testprob += weights[i] * x[i];
+              testprob += weights[iter] * x[iter];
           }
           return sigmoid(testprob);
         }
@@ -82,6 +82,38 @@ public class LogisticRegression {
             int TP=0, TN=0, FP=0, FN=0; // TP = True Positives, TN = True Negatives, FP = False Positives, FN = False Negatives
 
             // TODO: write code here to compute the above mentioned variables
+            for (int iter = 0; iter < testInstances.size(); iter++) {
+                
+                double[] x = testInstances.get(iter).x;
+                int instanceLabel = testInstances.get(iter).label;
+                int predictLabel = predict(x);
+
+                //How to iter through isntances for the variables
+                if (instanceLabel == predictLabel) {
+                    acc ++;
+                    if (instanceLabel == 0)
+                        TN++;
+                    else
+                        TP++;
+                } else {
+                    if (instanceLabel == 0)
+                        FP++;
+                    else
+                        FN++;
+                }
+            }
+
+            acc = (double)(TP+TN)/(double)(TP+TN+FP+FN);
+
+            //pos
+            p_pos = (double)(TP)/(double)(TP+FP);
+            r_pos = (double)(TP)/(double)(TP+FN);
+            f_pos = 2 * p_pos * r_pos / (p_pos + r_pos);
+            //neg
+            p_neg = (double)(TN)/(double)(TN+FN);
+            r_neg = (double)(TN)/(double)(TP+FP);
+            f_neg = 2 * p_neg * r_neg / (p_neg + r_neg);
+            //****************************************************
 
             System.out.println("Accuracy="+acc);
             System.out.println("P, R, and F1 score of the positive class=" + p_pos + " " + r_pos + " " + f_pos);
