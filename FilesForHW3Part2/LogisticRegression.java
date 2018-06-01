@@ -5,8 +5,10 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.FileReader;
 
-//my added imports
+//our added imports
 import java.lang.*;
 
 public class LogisticRegression {
@@ -49,6 +51,12 @@ public class LogisticRegression {
         /** Takes a test instance as input and outputs the probability of the label being 1 **/
         /** This function should call sigmoid() **/
         private double probPred1(double[] x) {
+          double testprob = 0;
+
+          for (int iter = 0; iter < weights.length; iter++)  {
+              testprob += weights[i] * x[i];
+          }
+          return sigmoid(testprob);
         }
 
         /** TODO: The prediction function **/
@@ -56,7 +64,14 @@ public class LogisticRegression {
         /** This function should call probPred1() **/
         public int predict(double[] x) {
             double pred = probPred1(x);
-
+            int predictor = 0;
+            if (pred >= 0.5){
+              predictor = 1;
+            }
+            else {
+              predictor = 0;
+            }
+            return predictor;
         }
 
         /** This function takes a test set as input, call the predict() to predict a label for it, and prints the accuracy, P, R, and F1 score of the positive class and negative class and the confusion matrix **/
@@ -84,9 +99,9 @@ public class LogisticRegression {
                 double lik = 0.0; // Stores log-likelihood of the training data for this iteration
                 for (int i=0; i < instances.size(); i++) {
                     // TODO: Train the model
-                    
+
                     // TODO: Compute the log-likelihood of the data here. Remember to take logs when necessary
-				}
+                }
                 System.out.println("iteration: " + n + " lik: " + lik);
             }
         }
@@ -137,7 +152,7 @@ public class LogisticRegression {
             List<LRInstance> testInstances = readDataSet("HW3_TianyiLuo_test.csv");
 
             // create an instance of the classifier
-            int d = trainInstances.get(0).x.length; 
+            int d = trainInstances.get(0).x.length;
             LogisticRegression logistic = new LogisticRegression(d);
 
             logistic.train(trainInstances);
@@ -154,4 +169,3 @@ public class LogisticRegression {
         }
 
     }
-
