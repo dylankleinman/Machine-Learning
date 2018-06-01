@@ -1,12 +1,11 @@
-package cmps142_hw4;
+
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.io.BufferedReader;
-import java.io.FileReader;
 
 //our added imports
 import java.lang.*;
@@ -22,7 +21,7 @@ public class LogisticRegression {
         /** the number of iterations */
         private int ITERATIONS = 200;
 
-        /** TODO: Constructor initializes the weight vector. Initialize it by setting it to the 0 vector. **/
+        /**  Constructor initializes the weight vector. Initialize it by setting it to the 0 vector. **/
         public LogisticRegression(int n) { // n is the number of weights to be learned
             int iter = 0;
             weights = new double[n];
@@ -31,7 +30,7 @@ public class LogisticRegression {
             }
         }
 
-        /** TODO: Implement the function that returns the L2 norm of the weight vector **/
+        /**  Implement the function that returns the L2 norm of the weight vector **/
         private double weightsL2Norm(){
             double normL2 = 0;
 
@@ -42,12 +41,12 @@ public class LogisticRegression {
             return Math.sqrt(normL2);
         }
 
-        /** TODO: Implement the sigmoid function **/ //DONE//
+        /**  Implement the sigmoid function **/ //DONE//
         private static double sigmoid(double z) {
             return (1/( 1 + Math.pow(Math.E,(-1*z))));
         }
 
-        /** TODO: Helper function for prediction **/
+        /** Helper function for prediction **/
         /** Takes a test instance as input and outputs the probability of the label being 1 **/
         /** This function should call sigmoid() **/
         private double probPred1(double[] x) {
@@ -59,7 +58,7 @@ public class LogisticRegression {
           return sigmoid(testprob);
         }
 
-        /** TODO: The prediction function **/
+        /**  The prediction function **/
         /** Takes a test instance as input and outputs the predicted label **/
         /** This function should call probPred1() **/
         public int predict(double[] x) {
@@ -81,9 +80,9 @@ public class LogisticRegression {
             double p_neg = 0, r_neg = 0, f_neg = 0;
             int TP=0, TN=0, FP=0, FN=0; // TP = True Positives, TN = True Negatives, FP = False Positives, FN = False Negatives
 
-            // TODO: write code here to compute the above mentioned variables
+            // write code here to compute the above mentioned variables
             for (int iter = 0; iter < testInstances.size(); iter++) {
-                
+
                 double[] x = testInstances.get(iter).x;
                 int instanceLabel = testInstances.get(iter).label;
                 int predictLabel = predict(x);
@@ -131,8 +130,19 @@ public class LogisticRegression {
                 double lik = 0.0; // Stores log-likelihood of the training data for this iteration
                 for (int i=0; i < instances.size(); i++) {
                     // TODO: Train the model
+                    double [] x_value = instances.get(i).x;
+                    int label = instances.get(i).label;
+                    int predicted_label = predict(x_value);
+                    int error = (label - predicted_label);
+
+                    for(int m = 0; m<x_value.length; m++){
+                      double updated_weight = rate * error * x_value[m];
+                      weights[m]+=updated_weight;
+                    }
 
                     // TODO: Compute the log-likelihood of the data here. Remember to take logs when necessary
+                    double prob = probPred1(x_value);
+                    lik += -((double) label*Math.log(prob) + (double)(1-label)*Math.log(1.0-prob));
                 }
                 System.out.println("iteration: " + n + " lik: " + lik);
             }
@@ -143,7 +153,12 @@ public class LogisticRegression {
             public double[] x; // The feature vector for the instance
 
             /** TODO: Constructor for initializing the Instance object **/
-            public LRInstance(int label, double[] x) {
+            public LRInstance(int label_input, double[] x_input) {
+              label = label_input;
+              x = new double[x_input.length];
+              for (int i = 0; i < x_input.length; i++) {
+                  x[i] = x_input[i];
+                }
             }
         }
 
