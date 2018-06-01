@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+//my added imports
+import java.lang.*;
+
 public class LogisticRegression {
 
         /** the learning rate */
