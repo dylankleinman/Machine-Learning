@@ -153,12 +153,12 @@ public class LogisticRegression {
             public double[] x; // The feature vector for the instance
 
             /** TODO: Constructor for initializing the Instance object **/
-            public LRInstance(int label_input, double[] x_input) {
-              label = label_input;
-              x = new double[x_input.length];
-              for (int i = 0; i < x_input.length; i++) {
-                  x[i] = x_input[i];
-                }
+            public LRInstance(int label, double[] x) {
+                this.label = label;
+                this.x = new double[x.length];
+                for (int iter = 0; iter < x.length; iter++) {
+                    this.x[iter] = x[iter];
+                } 
             }
         }
 
