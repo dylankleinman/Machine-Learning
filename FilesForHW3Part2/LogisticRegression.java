@@ -1,3 +1,5 @@
+//package cmps142_hw4;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
@@ -130,10 +132,10 @@ public class LogisticRegression {
                     
                     //use probability of label, not predicted label
                     double predictLabel = this.probPred1(x_value);
-                    double error = (label - predictLabel);
+                    double prob_label = (label - predictLabel);
 
                     for(int m = 0; m<this.weights.length; m++){
-                      double updated_weight = rate * error * x_value[m];
+                      double updated_weight = rate * x_value[m] * prob_label;
                       weights[m]+=updated_weight;
                     }
 

@@ -1,7 +1,8 @@
-package cmps142_hw4;
+//package cmps142_hw4;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -14,34 +15,62 @@ public class LogisticRegression_withRegularization {
         /** the weights to learn */
         private double[] weights;
 
-		/** the regularization coefficient */
+        /** the regularization coefficient */
         private double lambda = 0.0001;
 
         /** the number of iterations */
         private int ITERATIONS = 200;
 
-        /** TODO: Constructor initializes the weight vector. Initialize it by setting it to the 0 vector. **/
+        /**  Constructor initializes the weight vector. Initialize it by setting it to the 0 vector. **/
         public LogisticRegression_withRegularization(int n) { // n is the number of weights to be learned
-		}
+            int iter = 0;
+            weights = new double[n];
+            for (iter = 0; iter < n; iter++) {
+                weights[iter] = 0;
+            }
+        }
 
-        /** TODO: Implement the function that returns the L2 norm of the weight vector **/
+        /**  Implement the function that returns the L2 norm of the weight vector **/
         private double weightsL2Norm(){
+            double normL2 = 0;
+
+            //Euclidean norm function.
+            for(int iter = 0; iter < weights.length; iter++) {
+                normL2 += Math.pow(weights[iter], 2);
+            }
+            return Math.sqrt(normL2);
         }
 
-        /** TODO: Implement the sigmoid function **/
+        /**  Implement the sigmoid function **/ //DONE//
         private static double sigmoid(double z) {
+            return (1/( 1 + Math.pow(Math.E,(-1*z))));
         }
 
-        /** TODO: Helper function for prediction **/
+        /** Helper function for prediction **/
         /** Takes a test instance as input and outputs the probability of the label being 1 **/
         /** This function should call sigmoid() **/
         private double probPred1(double[] x) {
+          double testprob = 0;
+
+          for (int iter = 0; iter < weights.length; iter++)  {
+              testprob += weights[iter] * x[iter];
+          }
+          return sigmoid(testprob);
         }
 
-        /** TODO: The prediction function **/
+        /**  The prediction function **/
         /** Takes a test instance as input and outputs the predicted label **/
         /** This function should call probPred1() **/
         public int predict(double[] x) {
+            double pred = probPred1(x);
+            int predictor = 0;
+            if (pred >= 0.5){
+              predictor = 1;
+            }
+            else {
+              predictor = 0;
+            }
+            return predictor;
         }
 
         /** This function takes a test set as input, call the predict() to predict a label for it, and prints the accuracy, P, R, and F1 score of the positive class and negative class and the confusion matrix **/
@@ -51,7 +80,39 @@ public class LogisticRegression_withRegularization {
             double p_neg = 0, r_neg = 0, f_neg = 0;
             int TP=0, TN=0, FP=0, FN=0; // TP = True Positives, TN = True Negatives, FP = False Positives, FN = False Negatives
 
-            // TODO: write code here to compute the above mentioned variables
+            // write code here to compute the above mentioned variables
+            for (int iter = 0; iter < testInstances.size(); iter++) {
+
+                double[] x_value = testInstances.get(iter).x;
+                int instanceLabel = testInstances.get(iter).label;
+                int predictLabel = predict(x_value);
+
+                //How to iter through isntances for the variables
+                if (instanceLabel == predictLabel) {
+                    acc ++;
+                    if (instanceLabel == 0)
+                        TN++;
+                    else
+                        TP++;
+                } else {
+                    if (instanceLabel == 0)
+                        FP++;
+                    else
+                        FN++;
+                }
+            }
+
+            acc = (double)(TP+TN)/(double)(TP+TN+FP+FN);
+
+            //pos
+            p_pos = (double)(TP)/(double)(TP+FP);
+            r_pos = (double)(TP)/(double)(TP+FN);
+            f_pos = 2 * p_pos * r_pos / (p_pos + r_pos);
+            //neg
+            p_neg = (double)(TN)/(double)(TN+FN);
+            r_neg = (double)(TN)/(double)(TP+FP);
+            f_neg = 2 * p_neg * r_neg / (p_neg + r_neg);
+            //****************************************************
 
             System.out.println("Accuracy="+acc);
             System.out.println("P, R, and F1 score of the positive class=" + p_pos + " " + r_pos + " " + f_pos);
@@ -69,9 +130,26 @@ public class LogisticRegression_withRegularization {
                 double lik = 0.0; // Stores log-likelihood of the training data for this iteration
                 for (int i=0; i < instances.size(); i++) {
                     // TODO: Train the model
+                    double [] x_value = instances.get(i).x;
+                    int label = instances.get(i).label;
                     
+                    //use probability of label, not predicted label
+                    double predictLabel = this.probPred1(x_value);
+                    double prob_label = (label - predictLabel);
+
+                    for(int m = 0; m<this.weights.length; m++){
+                      double updated_weight = rate * x_value[m] * prob_label;
+
+                      //regularization uses a penalty.
+                      double penalty = rate*lambda*weights[m];
+                      double ascent_step = updated_weight - penalty;
+                      weights[m]+=ascent_step;
+                    }
+
                     // TODO: Compute the log-likelihood of the data here. Remember to take logs when necessary
-				}
+                    double prob = probPred1(x_value);
+                    lik += -((double) label*Math.log(prob) + (double)(1-label)*Math.log(1.0-prob));
+                }
                 System.out.println("iteration: " + n + " lik: " + lik);
             }
         }
@@ -82,6 +160,11 @@ public class LogisticRegression_withRegularization {
 
             /** TODO: Constructor for initializing the Instance object **/
             public LRInstance(int label, double[] x) {
+                this.label = label;
+                this.x = new double[x.length];
+                for (int iter = 0; iter < x.length; iter++) {
+                    this.x[iter] = x[iter];
+                } 
             }
         }
 
@@ -122,7 +205,7 @@ public class LogisticRegression_withRegularization {
             List<LRInstance> testInstances = readDataSet("HW3_TianyiLuo_test.csv");
 
             // create an instance of the classifier
-            int d = trainInstances.get(0).x.length; 
+            int d = trainInstances.get(0).x.length;
             LogisticRegression_withRegularization logistic = new LogisticRegression_withRegularization(d);
 
             logistic.train(trainInstances);
@@ -139,4 +222,3 @@ public class LogisticRegression_withRegularization {
         }
 
     }
-
