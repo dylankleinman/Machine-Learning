@@ -80,7 +80,7 @@ public class LogisticRegression {
 
                 double[] x_value = testInstances.get(iter).x;
                 int instanceLabel = testInstances.get(iter).label;
-                int predictLabel = predict(x);
+                int predictLabel = predict(x_value);
 
                 //How to iter through isntances for the variables
                 if (instanceLabel == predictLabel) {
