@@ -1,14 +1,9 @@
-
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
-//our added imports
-import java.lang.*;
 
 public class LogisticRegression {
 
@@ -83,7 +78,7 @@ public class LogisticRegression {
             // write code here to compute the above mentioned variables
             for (int iter = 0; iter < testInstances.size(); iter++) {
 
-                double[] x = testInstances.get(iter).x;
+                double[] x_value = testInstances.get(iter).x;
                 int instanceLabel = testInstances.get(iter).label;
                 int predictLabel = predict(x);
 
@@ -132,10 +127,12 @@ public class LogisticRegression {
                     // TODO: Train the model
                     double [] x_value = instances.get(i).x;
                     int label = instances.get(i).label;
-                    int predicted_label = predict(x_value);
-                    int error = (label - predicted_label);
+                    
+                    //use probability of label, not predicted label
+                    double predictLabel = this.probPred1(x_value);
+                    double error = (label - predictLabel);
 
-                    for(int m = 0; m<x_value.length; m++){
+                    for(int m = 0; m<this.weights.length; m++){
                       double updated_weight = rate * error * x_value[m];
                       weights[m]+=updated_weight;
                     }
