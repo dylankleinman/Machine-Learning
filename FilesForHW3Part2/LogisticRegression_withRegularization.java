@@ -1,4 +1,4 @@
-//package cmps142_hw4;
+package cmps142_hw4;
 
 import java.io.File;
 import java.io.FileNotFoundException;
