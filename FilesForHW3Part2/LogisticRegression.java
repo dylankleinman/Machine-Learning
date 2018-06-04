@@ -86,7 +86,6 @@ public class LogisticRegression {
 
                 //How to iter through isntances for the variables
                 if (instanceLabel == predictLabel) {
-                    acc ++;
                     if (instanceLabel == 0)
                         TN++;
                     else
@@ -107,8 +106,8 @@ public class LogisticRegression {
             f_pos = 2 * p_pos * r_pos / (p_pos + r_pos);
             //neg
             p_neg = (double)(TN)/(double)(TN+FN);
-            r_neg = (double)(TN)/(double)(TP+FP);
-            f_neg = 2 * p_neg * r_neg / (p_neg + r_neg);
+            r_neg = (double)(TN)/(double)(TN+FP);
+            f_neg = (2 * p_neg * r_neg) / (p_neg + r_neg);
             //****************************************************
 
             System.out.println("Accuracy="+acc);
@@ -153,6 +152,8 @@ public class LogisticRegression {
 
             /** TODO: Constructor for initializing the Instance object **/
             public LRInstance(int label, double[] x) {
+
+                //Alex's note - forgot about syntax this. makes grabbing the label or x easier
                 this.label = label;
                 this.x = new double[x.length];
                 for (int iter = 0; iter < x.length; iter++) {

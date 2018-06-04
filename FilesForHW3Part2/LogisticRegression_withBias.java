@@ -86,7 +86,6 @@ public class LogisticRegression_withBias {
 
                 //How to iter through isntances for the variables
                 if (instanceLabel == predictLabel) {
-                    acc ++;
                     if (instanceLabel == 0)
                         TN++;
                     else
@@ -107,7 +106,7 @@ public class LogisticRegression_withBias {
             f_pos = 2 * p_pos * r_pos / (p_pos + r_pos);
             //neg
             p_neg = (double)(TN)/(double)(TN+FN);
-            r_neg = (double)(TN)/(double)(TP+FP);
+            r_neg = (double)(TN)/(double)(TN+FP);
             f_neg = 2 * p_neg * r_neg / (p_neg + r_neg);
             //****************************************************
 
@@ -153,6 +152,8 @@ public class LogisticRegression_withBias {
 
             /** TODO: Constructor for initializing the Instance object **/
             public LRInstance(int label, double[] x) {
+
+                //Alex's note - forgot about syntax this. makes grabbing the label or x easier
                 this.label = label;
 
                 //increase length to account for bias
